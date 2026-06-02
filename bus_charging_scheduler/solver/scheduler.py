@@ -12,6 +12,10 @@ from bus_charging_scheduler.solver.constraints.registry import (
 )
 from bus_charging_scheduler.solver.errors import SolverError
 from bus_charging_scheduler.solver.model_builder import build_scheduling_context
+from bus_charging_scheduler.solver.objectives.registry import (
+    ObjectiveRegistry,
+    default_objective_registry,
+)
 from bus_charging_scheduler.solver.result import ChargingSession, SolverResult
 
 
@@ -19,16 +23,18 @@ def solve_scenario(
     scenario: Scenario,
     *,
     constraint_registry: ConstraintRegistry | None = None,
+    objective_registry: ObjectiveRegistry | None = None,
     max_time_seconds: float = 10.0,
 ) -> SolverResult:
     graph = build_route_graph(scenario)
     model = cp_model.CpModel()
     context = build_scheduling_context(scenario, graph, model)
 
-    registry = constraint_registry or default_constraint_registry()
-    registry.apply_all(context)
+    constraints = constraint_registry or default_constraint_registry()
+    constraints.apply_all(context)
 
-    _apply_phase3_objective(context)
+    objectives = objective_registry or default_objective_registry()
+    objectives.apply(context)
 
     solver = cp_model.CpSolver()
     solver.parameters.max_time_in_seconds = max_time_seconds
@@ -40,15 +46,6 @@ def solve_scenario(
         raise SolverError(f"solver finished with status {status_name}")
 
     return _extract_result(context, solver, status_name)
-
-
-def _apply_phase3_objective(context) -> None:
-    """Minimize route completion time until weighted objectives arrive in Phase 4."""
-    completion_terms = [
-        bus_vars.departure_slots[-1] for bus_vars in context.bus_vars.values()
-    ]
-    if completion_terms:
-        context.model.Minimize(sum(completion_terms))
 
 
 def _extract_result(context, solver: cp_model.CpSolver, status_name: str) -> SolverResult:

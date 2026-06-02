@@ -53,11 +53,6 @@ def validate_scenario(scenario: Scenario) -> list[str]:
                 f"bus {bus.id!r}: min_departure_soc_kwh ({bus.min_departure_soc_kwh}) "
                 f"exceeds battery_capacity_kwh ({bus.battery_capacity_kwh})"
             )
-        if bus.min_departure_soc_kwh > bus.initial_soc_kwh:
-            errors.append(
-                f"bus {bus.id!r}: min_departure_soc_kwh ({bus.min_departure_soc_kwh}) "
-                f"exceeds initial_soc_kwh ({bus.initial_soc_kwh})"
-            )
 
     for route in scenario.routes:
         for index, segment in enumerate(route.segments):

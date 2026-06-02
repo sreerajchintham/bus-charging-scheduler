@@ -69,15 +69,6 @@ def test_invalid_soc_bounds_fails():
     assert any("initial_soc_kwh" in msg for msg in exc_info.value.messages)
 
 
-def test_min_departure_exceeds_initial_soc_fails():
-    data = minimal_scenario_dict()
-    data["buses"][0]["min_departure_soc_kwh"] = 300
-    data["buses"][0]["initial_soc_kwh"] = 250
-    with pytest.raises(ScenarioValidationError) as exc_info:
-        load_scenario_from_dict(data)
-    assert any("min_departure_soc_kwh" in msg for msg in exc_info.value.messages)
-
-
 def test_horizon_not_divisible_by_slot_fails():
     data = minimal_scenario_dict()
     data["scheduling"]["horizon_minutes"] = 1000
@@ -97,6 +88,7 @@ def test_horizon_not_divisible_by_slot_fails():
         "weights",
         "scheduling",
         "travel",
+        "energy",
     ],
 )
 def test_missing_required_key_fails(missing_key):

@@ -52,6 +52,13 @@ class TravelParams(BaseModel):
     average_speed_kmh: float = Field(gt=0)
 
 
+class EnergyParams(BaseModel):
+    """Battery consumption and charging rates for range constraints."""
+
+    consumption_kwh_per_km: float = Field(gt=0)
+    charging_kwh_per_minute: float = Field(gt=0)
+
+
 class Scenario(BaseModel):
     name: str = Field(min_length=1)
     operators: list[Operator] = Field(min_length=1)
@@ -61,6 +68,7 @@ class Scenario(BaseModel):
     weights: ObjectiveWeights
     scheduling: SchedulingParams
     travel: TravelParams
+    energy: EnergyParams
 
     @field_validator("operators", "stations", "routes", "buses", mode="after")
     @classmethod

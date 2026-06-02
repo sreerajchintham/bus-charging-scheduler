@@ -1,3 +1,4 @@
 # Runtime dependencies (also declared in pyproject.toml)
+ortools>=9.10
 pydantic>=2.0
 PyYAML>=6.0

@@ -1,5 +1,6 @@
 from bus_charging_scheduler.domain.models import (
     Bus,
+    EnergyParams,
     ObjectiveWeights,
     Operator,
     Route,
@@ -12,6 +13,7 @@ from bus_charging_scheduler.domain.models import (
 
 __all__ = [
     "Bus",
+    "EnergyParams",
     "ObjectiveWeights",
     "Operator",
     "Route",

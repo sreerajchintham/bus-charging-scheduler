@@ -56,6 +56,10 @@ def minimal_scenario_dict() -> dict:
         "travel": {
             "average_speed_kmh": 40,
         },
+        "energy": {
+            "consumption_kwh_per_km": 1.5,
+            "charging_kwh_per_minute": 50,
+        },
     }
 
 

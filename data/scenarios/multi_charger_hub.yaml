@@ -1,0 +1,79 @@
+name: multi-charger-hub
+
+operators:
+  - id: op-metro
+    display_name: Metro Transit
+
+stations:
+  - id: hub-central
+    charger_count: 4
+  - id: yard-north
+    charger_count: 2
+  - id: stop-south
+    charger_count: 1
+
+routes:
+  - id: line-alpha
+    segments:
+      - from_station_id: yard-north
+        to_station_id: hub-central
+        distance_km: 8.0
+      - from_station_id: hub-central
+        to_station_id: stop-south
+        distance_km: 10.0
+      - from_station_id: stop-south
+        to_station_id: hub-central
+        distance_km: 10.0
+      - from_station_id: hub-central
+        to_station_id: yard-north
+        distance_km: 8.0
+  - id: line-beta
+    segments:
+      - from_station_id: yard-north
+        to_station_id: hub-central
+        distance_km: 8.0
+      - from_station_id: hub-central
+        to_station_id: stop-south
+        distance_km: 10.0
+      - from_station_id: stop-south
+        to_station_id: hub-central
+        distance_km: 10.0
+      - from_station_id: hub-central
+        to_station_id: yard-north
+        distance_km: 8.0
+
+buses:
+  - id: bus-alpha-1
+    operator_id: op-metro
+    route_id: line-alpha
+    battery_capacity_kwh: 400
+    initial_soc_kwh: 320
+    min_departure_soc_kwh: 220
+  - id: bus-alpha-2
+    operator_id: op-metro
+    route_id: line-alpha
+    battery_capacity_kwh: 400
+    initial_soc_kwh: 300
+    min_departure_soc_kwh: 220
+  - id: bus-beta-1
+    operator_id: op-metro
+    route_id: line-beta
+    battery_capacity_kwh: 400
+    initial_soc_kwh: 310
+    min_departure_soc_kwh: 220
+
+weights:
+  individual_delay: 1.0
+  operator_fairness: 0.3
+  network_efficiency: 0.5
+
+scheduling:
+  horizon_minutes: 1440
+  time_slot_minutes: 15
+
+travel:
+  average_speed_kmh: 45
+
+energy:
+  consumption_kwh_per_km: 1.4
+  charging_kwh_per_minute: 55

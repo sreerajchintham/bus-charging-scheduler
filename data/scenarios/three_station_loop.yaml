@@ -1,0 +1,53 @@
+name: three-station-loop
+
+operators:
+  - id: op-regional
+    display_name: Regional Connector
+
+stations:
+  - id: depot-a
+    charger_count: 2
+  - id: mid-transfer
+    charger_count: 1
+  - id: terminal-b
+    charger_count: 2
+
+routes:
+  - id: connector-200
+    segments:
+      - from_station_id: depot-a
+        to_station_id: mid-transfer
+        distance_km: 8.0
+      - from_station_id: mid-transfer
+        to_station_id: terminal-b
+        distance_km: 14.0
+      - from_station_id: terminal-b
+        to_station_id: mid-transfer
+        distance_km: 14.0
+      - from_station_id: mid-transfer
+        to_station_id: depot-a
+        distance_km: 8.0
+
+buses:
+  - id: bus-connector-1
+    operator_id: op-regional
+    route_id: connector-200
+    battery_capacity_kwh: 360
+    initial_soc_kwh: 270
+    min_departure_soc_kwh: 190
+
+weights:
+  individual_delay: 1.0
+  operator_fairness: 0.5
+  network_efficiency: 0.4
+
+scheduling:
+  horizon_minutes: 1440
+  time_slot_minutes: 15
+
+travel:
+  average_speed_kmh: 38
+
+energy:
+  consumption_kwh_per_km: 1.5
+  charging_kwh_per_minute: 48

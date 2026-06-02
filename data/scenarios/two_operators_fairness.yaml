@@ -1,0 +1,85 @@
+name: two-operators-fairness
+
+operators:
+  - id: op-north
+    display_name: North County
+  - id: op-south
+    display_name: South County
+
+stations:
+  - id: north-depot
+    charger_count: 2
+  - id: south-depot
+    charger_count: 2
+  - id: shared-terminal
+    charger_count: 1
+
+routes:
+  - id: north-express
+    segments:
+      - from_station_id: north-depot
+        to_station_id: shared-terminal
+        distance_km: 18.0
+      - from_station_id: shared-terminal
+        to_station_id: north-depot
+        distance_km: 18.0
+  - id: north-shuttle
+    segments:
+      - from_station_id: north-depot
+        to_station_id: shared-terminal
+        distance_km: 18.0
+  - id: south-express
+    segments:
+      - from_station_id: south-depot
+        to_station_id: shared-terminal
+        distance_km: 22.0
+      - from_station_id: shared-terminal
+        to_station_id: south-depot
+        distance_km: 22.0
+  - id: south-shuttle
+    segments:
+      - from_station_id: south-depot
+        to_station_id: shared-terminal
+        distance_km: 22.0
+
+buses:
+  - id: north-express-1
+    operator_id: op-north
+    route_id: north-express
+    battery_capacity_kwh: 380
+    initial_soc_kwh: 300
+    min_departure_soc_kwh: 200
+  - id: north-shuttle-1
+    operator_id: op-north
+    route_id: north-shuttle
+    battery_capacity_kwh: 380
+    initial_soc_kwh: 290
+    min_departure_soc_kwh: 200
+  - id: south-express-1
+    operator_id: op-south
+    route_id: south-express
+    battery_capacity_kwh: 380
+    initial_soc_kwh: 295
+    min_departure_soc_kwh: 200
+  - id: south-shuttle-1
+    operator_id: op-south
+    route_id: south-shuttle
+    battery_capacity_kwh: 380
+    initial_soc_kwh: 285
+    min_departure_soc_kwh: 200
+
+weights:
+  individual_delay: 0.5
+  operator_fairness: 2.0
+  network_efficiency: 0.3
+
+scheduling:
+  horizon_minutes: 1440
+  time_slot_minutes: 15
+
+travel:
+  average_speed_kmh: 40
+
+energy:
+  consumption_kwh_per_km: 1.5
+  charging_kwh_per_minute: 50

@@ -46,6 +46,12 @@ class SchedulingParams(BaseModel):
     time_slot_minutes: int = Field(gt=0)
 
 
+class TravelParams(BaseModel):
+    """Network-wide assumptions for converting segment distance to travel time."""
+
+    average_speed_kmh: float = Field(gt=0)
+
+
 class Scenario(BaseModel):
     name: str = Field(min_length=1)
     operators: list[Operator] = Field(min_length=1)
@@ -54,6 +60,7 @@ class Scenario(BaseModel):
     buses: list[Bus] = Field(min_length=1)
     weights: ObjectiveWeights
     scheduling: SchedulingParams
+    travel: TravelParams
 
     @field_validator("operators", "stations", "routes", "buses", mode="after")
     @classmethod

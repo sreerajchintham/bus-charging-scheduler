@@ -7,6 +7,7 @@ from bus_charging_scheduler.domain.models import (
     Scenario,
     SchedulingParams,
     Station,
+    TravelParams,
 )
 
 __all__ = [
@@ -18,4 +19,5 @@ __all__ = [
     "Scenario",
     "SchedulingParams",
     "Station",
+    "TravelParams",
 ]

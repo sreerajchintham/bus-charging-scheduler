@@ -53,6 +53,9 @@ def minimal_scenario_dict() -> dict:
             "horizon_minutes": 1440,
             "time_slot_minutes": 15,
         },
+        "travel": {
+            "average_speed_kmh": 40,
+        },
     }
 
 

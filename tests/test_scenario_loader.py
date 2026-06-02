@@ -88,7 +88,16 @@ def test_horizon_not_divisible_by_slot_fails():
 
 @pytest.mark.parametrize(
     "missing_key",
-    ["name", "operators", "stations", "routes", "buses", "weights", "scheduling"],
+    [
+        "name",
+        "operators",
+        "stations",
+        "routes",
+        "buses",
+        "weights",
+        "scheduling",
+        "travel",
+    ],
 )
 def test_missing_required_key_fails(missing_key):
     data = copy.deepcopy(minimal_scenario_dict())

@@ -50,13 +50,20 @@ def solve_scenario(
 
 def _extract_result(context, solver: cp_model.CpSolver, status_name: str) -> SolverResult:
     charging_sessions: list[ChargingSession] = []
+    bus_arrival_slots: dict[str, list[int]] = {}
     bus_departure_slots: dict[str, list[int]] = {}
+    bus_charge_duration_slots: dict[str, list[int]] = {}
 
     for bus_id, bus_vars in context.bus_vars.items():
-        departures = [
+        bus_arrival_slots[bus_id] = [
+            solver.Value(slot) for slot in bus_vars.arrival_slots
+        ]
+        bus_departure_slots[bus_id] = [
             solver.Value(slot) for slot in bus_vars.departure_slots
         ]
-        bus_departure_slots[bus_id] = departures
+        bus_charge_duration_slots[bus_id] = [
+            solver.Value(slot) for slot in bus_vars.charge_duration_slots
+        ]
 
         for visit_index, station_id in enumerate(bus_vars.station_ids):
             duration = solver.Value(bus_vars.charge_duration_slots[visit_index])
@@ -79,5 +86,7 @@ def _extract_result(context, solver: cp_model.CpSolver, status_name: str) -> Sol
         horizon_slots=context.horizon_slots,
         slot_minutes=context.slot_minutes,
         charging_sessions=charging_sessions,
+        bus_arrival_slots=bus_arrival_slots,
         bus_departure_slots=bus_departure_slots,
+        bus_charge_duration_slots=bus_charge_duration_slots,
     )

@@ -21,4 +21,6 @@ class SolverResult:
     horizon_slots: int
     slot_minutes: int
     charging_sessions: list[ChargingSession]
+    bus_arrival_slots: dict[str, list[int]]
     bus_departure_slots: dict[str, list[int]]
+    bus_charge_duration_slots: dict[str, list[int]]

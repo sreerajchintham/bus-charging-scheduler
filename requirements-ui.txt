@@ -1,0 +1,4 @@
+# UI dependencies (Streamlit)
+-r requirements.txt
+streamlit>=1.28
+-e .

@@ -18,9 +18,13 @@ dependencies = [
 dev = [
     "pytest>=8.0",
 ]
+ui = [
+    "streamlit>=1.28",
+]
 
 [project.scripts]
 bcs-pytest = "bus_charging_scheduler._pytest_cli:main"
+bcs-ui = "bus_charging_scheduler.ui.launcher:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

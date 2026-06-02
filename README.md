@@ -41,3 +41,18 @@ python -m pytest --disable-plugin-autoload -v
 ```
 
 After `pip install -r requirements-dev.txt`, prefer **`make test`** or **`bcs-pytest`** over typing `pytest` alone.
+
+## Streamlit UI
+
+```bash
+pip install -r requirements-ui.txt
+bcs-ui
+```
+
+Or:
+
+```bash
+streamlit run bus_charging_scheduler/ui/app.py
+```
+
+The UI provides a scenario dropdown, YAML viewer, per-bus timetables, and per-station charging/utilization tables.

@@ -1,0 +1,6 @@
+# Development / test dependencies
+# Install: pip install -r requirements-dev.txt
+# Test:    make test   (or bcs-pytest -v)  — not bare `pytest` on Conda base
+-r requirements.txt
+pytest>=8.0
+-e .
